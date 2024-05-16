@@ -28,7 +28,7 @@ def load_module():
     
 def get_modules_from(module):
     moves = []
-    text_file = open("Charles_Darwin\module" + str(module) + ".txt", "r")
+    text_file = open("Charles_Darwin/module" + str(module) + ".txt", "r")
     for counter in range(0,4):
         move_read = text_file.readline()
         move_read = int(move_read.strip())
@@ -44,8 +44,9 @@ def output_module():
 
 def output_moves():
     global possible_moves
-    print("\nFrom here you can move to modules: | ",end="') for move in possible_moves:")
-    print(move,"| ")
+    print("\nFrom here you can move to modules: | ",end="") 
+    for move in possible_moves:
+        print(move,"| ", end="")
 
 def get_action():
     global module, last_module, possible_moves
@@ -63,6 +64,7 @@ def get_action():
                 print("The module must be connected to the current module.")
 
 # Main program starts here
+
 while alive and not won:
     load_module()
     if won == False and alive == True:
