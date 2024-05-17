@@ -4,9 +4,9 @@
 import random
 
 # Global variables
-num_modules = 17                                         # The number of modules in the space station
+num_modules = 0                                          # The number of modules in the space station
 module = 1                                               # The module of the space station we are in
-last_module=0                                            # The last module we were in
+last_module = 0                                          # The last module we were in
 possible_moves = []                                      # List of the possible moves we can make
 alive = True                                             # Whether the player is alive or dead
 won = False                                              # Whether the player has won
@@ -58,12 +58,51 @@ def get_action():
             move = int(input("Enter the module to move to: "))
             if move in possible_moves:
                 valid_action = True
-            else:
                 last_module = module
                 module = move
+            else:
                 print("The module must be connected to the current module.")
 
+def spawn_npcs():
+    global num_modules, queen, vent_shafts, info_panels, workers
+    
+    module_set = []
+    
+    for counter in range(2, num_modules + 1):
+        module_set.append(counter)
+
+    random.shuffle(module_set)
+    i = 0
+    
+    queen = module_set[i]
+    
+    for counter in range(0,3):
+        i=i+1
+        vent_shafts.append(module_set[i])
+
+    for counter in range(0,2):
+        i=i+1
+        info_panels.append(module_set[i])
+
+    for counter in range(0,3):
+        i=i+1
+        workers.append(module_set[i])
+
 # Main program starts here
+
+try:
+    while True:
+        num_modules += 1
+        open("Charles_Darwin/module" + str(num_modules) + ".txt", "r")
+except FileNotFoundError:
+    num_modules -= 1
+
+
+spawn_npcs()
+print("Queen alien is located in module:", queen)
+print("Ventilation shafts are located in modules:", vent_shafts)
+print("Information panels are located in modules:",info_panels)
+print("Worker aliens are located in modules:", workers)
 
 while alive and not won:
     load_module()
